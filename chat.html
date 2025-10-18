@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+
+<head>
+	<title>MedNova</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  
+  <link rel="stylesheet" href="assets/chat.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+
+	<!-- Header -->
+	<header id="header">
+		<div class="header-icon">
+
+			<h1>
+				<a href="index.html">MedNova</a>
+			</h1>
+		</div>
+		<nav id="nav">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="team.html"><b>1. The Team</b></a></li>
+				<li><a href="vision.html">2. Vision</a></li>
+				<li><a href="ethics.html">3. Ethics & More</a></li>
+				<li><a href="roadmap.html">4. Roadmap</a></li>
+				<li><a href="chat.html" class="button">TEST MEDNOVA</a></li>
+			</ul>
+		</nav>
+	</header>
+
+<body>
+  <div class="chat-shell">
+    <header class="chat-header">
+      <div class="chat-title">MedNova Assistant</div>
+      <div class="chat-sub">Ask us about your health problems</div>
+    </header>
+
+    <main id="chat" class="chat-window" aria-live="polite" aria-label="Chat messages">
+      <!-- Messages injected here -->
+      <div class="msg bot">
+        <div class="bubble">
+          Welcome to <strong>MedNova</strong> where AI meets compassionate care.  
+    Ask me about your wearable, health insights, or how our technology helps manage chronic conditions with transparency and equity.
+        </div>
+      </div>
+    </main>
+
+    <form id="composer" class="composer" autocomplete="off">
+      <input id="input" class="input" type="text" name="message" placeholder="Type your question…"
+        aria-label="Message input" />
+      <button class="send" type="submit" aria-label="Send message">Send</button>
+    </form>
+
+    <footer class="chat-footer">
+
+      <span>For Every Heartbeat</span>
+    </footer>
+  </div>
+
+  <footer class="mednova-footer">
+		<img src="images/mednova.png" alt="Mednova Logo">
+		<p>Leading with Courage in Every Heartbeat</p>
+	</footer>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const form = document.getElementById('composer');
+    const input = document.getElementById('input');
+
+    // Basic intent responses (edit freely)
+
+
+    const existingIntents = [
+      // --- General greetings and help ---
+      
+      { keys: ["what can you do", "capabilities", "functions"], reply: "I can summarize MedNova’s vision, explain our AI platform for chronic disease management, guide you through wearable setup, and answer ethics, data, or pilot rollout questions." },
+
+      // --- Vision and Mission ---
+      { keys: ["vision", "mission", "goal", "purpose"], reply: "MedNova’s mission is to make equitable, AI-powered chronic disease management accessible to every patient — urban or rural — within three years." },
+      { keys: ["bold goal", "target", "ambition"], reply: "Our bold goal: deploy AI-integrated wearables in three pilot regions (Texas, Ontario, and British Columbia) by 2026, improving care efficiency by 25% and reducing hospital readmissions by 15%." },
+
+      // --- Chronic disease and patient help ---
+      { keys: ["chronic disease", "long term condition", "disease management"], reply: "MedNova supports patients with chronic diseases like diabetes, hypertension, and heart conditions using AI-guided insights, real-time monitoring, and clinician-linked feedback loops." },
+      { keys: ["heart", "cardiac", "cardiology"], reply: "Our cardiac AI system analyzes wearable ECG and heart-rate data to detect anomalies early and share trends with your clinician securely." },
+      { keys: ["diabetes", "glucose", "blood sugar"], reply: "The MedNova glucose-monitoring integration uses predictive AI models to anticipate spikes and dips, helping patients adjust before issues arise." },
+      { keys: ["hypertension", "blood pressure", "bp"], reply: "Our system continuously tracks blood pressure trends via wearables, alerting clinicians if readings deviate from safe baselines." },
+      { keys: ["asthma", "respiratory", "breathing"], reply: "We’re developing asthma and respiratory modules that track breathing irregularities, environmental triggers, and inhaler use through wearable sensors." },
+
+      // --- Wearable setup and data use ---
+      { keys: ["setup", "wearable", "connect device", "pair device"], reply: "To set up your MedNova wearable, open the app, go to ‘Device Setup’, and follow the Bluetooth pairing guide. Once connected, data automatically syncs with your MedNova account." },
+      { keys: ["data privacy", "data use", "my data", "privacy"], reply: "Your data is encrypted and stored securely. Only you and your authorized clinician can access it. Our transparent data policy outlines usage, protection, and deletion." },
+      { keys: ["data deletion", "delete my data"], reply: "You can request deletion at any time via Settings → Data Management → ‘Request Data Deletion’. The process is completed within 30 days, verified by our compliance team." },
+      { keys: ["data sharing", "consent"], reply: "You control who sees your data. Sharing is permission-based — no third party gets access without your explicit consent." },
+
+      // --- AI and transparency ---
+      { keys: ["ai", "algorithm", "model", "machine learning"], reply: "Our AI models analyze wearable data to predict risk trends. They’re continuously audited for bias, accuracy, and fairness by our Ethics Board." },
+      { keys: ["bias", "audit", "fairness"], reply: "Bias testing is part of every model update. Results are reviewed by our AI Ethics Board and shared publicly for transparency." },
+      { keys: ["explainability", "how it works", "transparency"], reply: "We use explainable AI techniques so both clinicians and patients can understand how insights are generated — no ‘black box’ decisions." },
+
+      // --- Ethical Guardrails ---
+      { keys: ["ethics", "ethical", "accountability", "integrity"], reply: "Our ethics framework is built on Transparency, Fairness, and Accountability. We include patient advocates and clinicians in every AI governance meeting." },
+      { keys: ["ethics board", "review board", "oversight"], reply: "Our AI Ethics Board includes patient representatives, data scientists, clinicians, and independent advisors to ensure responsible innovation." },
+      { keys: ["grant moise", "integrity", "human dignity"], reply: "As Grant Moise emphasized, every MedNova decision reflects scientific integrity and human dignity. That principle guides our entire Ethics Board." },
+
+      // --- Equity & inclusion ---
+      { keys: ["equity", "accessibility", "rural", "low income"], reply: "MedNova partners with rural clinics and community centers to ensure access and digital literacy. We provide free starter kits for eligible patients." },
+      { keys: ["starter kit", "funding", "support program"], reply: "Our equity initiative includes public-private funding for starter kits, training sessions, and broadband-enabled wearable access for underserved regions." },
+
+      // --- Stakeholder trust ---
+      { keys: ["stakeholder", "partners", "clinicians", "community"], reply: "We collaborate with regulators, healthcare partners, and community organizations to co-design transparent and fair deployment models." },
+      { keys: ["trust", "collaboration", "transparency initiative"], reply: "Trust is earned through openness. We share our model audits, data practices, and pilot results publicly with partner communities." },
+      { keys: ["regulator", "policy", "compliance"], reply: "MedNova aligns with regional health data laws and GDPR/HIPAA standards. Regulators receive transparency reports each quarter." },
+
+      // --- Roadmap / rollout ---
+      { keys: ["roadmap", "timeline", "phase", "year 1", "year 2", "year 3"], reply: "Our rollout roadmap: Phase I (Year 1) pilot programs; Phase II (Year 2) scale & optimize with audits; Phase III (Year 3) global expansion with standardized governance." },
+      { keys: ["pilot", "trial", "beta"], reply: "Our pilot trials in Texas, Ontario, and British Columbia validate outcomes across diverse demographics and clinical contexts." },
+      { keys: ["expansion", "growth", "next steps"], reply: "After successful pilots, expansion will target additional public health systems and global partnerships for equitable AI deployment." },
+
+      // --- Clinical coordination ---
+      { keys: ["clinician", "doctor", "care team", "provider"], reply: "MedNova integrates directly into clinical dashboards, providing clinicians with real-time patient summaries and predictive alerts." },
+      { keys: ["dashboard", "portal", "results", "summary"], reply: "Your clinician can view daily metrics via the MedNova Dashboard, including heart rate trends, activity summaries, and AI insights." },
+      { keys: ["alert", "notification", "warning"], reply: "The AI triggers alerts for sustained abnormal readings, automatically notifying both patient and clinician dashboards for timely intervention." },
+
+      // --- Technical issues ---
+      { keys: ["connection", "bluetooth", "sync", "trouble"], reply: "If your wearable isn’t syncing, ensure Bluetooth is on, restart the app, and try reconnecting. For persistent issues, contact support@mednova.example." },
+      { keys: ["battery", "charging", "power"], reply: "Charge your device nightly. A full charge lasts 48 hours with continuous monitoring." },
+      { keys: ["update", "firmware", "software"], reply: "Firmware updates install automatically when your wearable connects to Wi-Fi. Ensure the app is open and connected." },
+
+      // --- AI coaching & lifestyle feedback ---
+      { keys: ["nutrition", "diet", "food", "meal"], reply: "MedNova offers diet tracking integrated with AI insights — helping identify correlations between nutrition, glucose levels, and heart rate trends." },
+      { keys: ["exercise", "fitness", "activity"], reply: "Our wearable tracks daily activity, recommending exercise plans calibrated to your condition and physician guidance." },
+      { keys: ["sleep", "rest", "fatigue"], reply: "Sleep metrics are monitored to flag patterns that may correlate with chronic disease flare-ups or poor recovery." },
+      { keys: ["stress", "mental health", "mood"], reply: "Stress-tracking models correlate physiological signals with mood data, offering daily resilience insights and coping recommendations." },
+
+      // --- Research & data insights ---
+      { keys: ["study", "research", "trials", "data analysis"], reply: "We collaborate with universities and research institutions to study long-term outcomes and improve chronic disease prediction models." },
+      { keys: ["publication", "paper", "results"], reply: "Pilot findings and AI fairness reports are published on our transparency portal annually." },
+
+      // --- Contact and follow-up ---
+      { keys: ["contact", "reach", "email", "support"], reply: "You can reach us anytime at support@mednova.example or through the contact form on our main site." },
+      { keys: ["feedback", "suggestion", "idea"], reply: "We welcome feedback! Share your ideas via the Feedback tab in the MedNova app or email innovation@mednova.example." },
+      { keys: ["emergency", "urgent", "help now"], reply: "For urgent medical issues, please contact your clinician or emergency services — this chat is informational, not diagnostic." },
+      { keys: ["goodbye", "thanks", "thank you", "bye"], reply: "You’re welcome! Take care — and remember, at MedNova, innovation meets compassion in every heartbeat." },
+    ];
+
+    // --- Chronic and lifestyle disease-specific guidance ---
+    const healthIntents = [
+      // Cardiovascular conditions
+      { keys: ["heart disease", "cardiovascular", "arrhythmia", "heart failure"], reply: "Our cardiac AI monitors heart rhythm, heart-rate variability, and early signs of arrhythmia or heart failure. It provides clinician alerts when readings deviate from baseline and suggests lifestyle adjustments." },
+      { keys: ["cholesterol", "lipid", "hdl", "ldl"], reply: "MedNova’s analytics help track lipid panels over time and correlate them with physical activity and diet data from your wearable. Your clinician can review trend reports directly." },
+      { keys: ["stroke", "blood clot", "circulation"], reply: "The system looks for changes in oxygen saturation and activity recovery time that could indicate circulation problems, alerting your provider early." },
+
+      // Diabetes and metabolic health
+      { keys: ["diabetes", "blood sugar", "glucose", "insulin"], reply: "For diabetes management, MedNova integrates continuous glucose monitoring (CGM) data with AI predictions to forecast spikes or drops and recommend preventive actions." },
+      { keys: ["type 1", "type 2", "prediabetes"], reply: "MedNova supports both Type 1 and Type 2 diabetes care plans, offering insights into insulin timing, nutrition, and physical activity correlation." },
+      { keys: ["hbA1c", "A1c"], reply: "Your MedNova dashboard can import HbA1c lab data and visualize long-term glycemic control alongside wearable metrics like steps and sleep quality." },
+
+      // Hypertension and vascular health
+      { keys: ["hypertension", "blood pressure", "bp monitor"], reply: "Our wearables track blood-pressure variability continuously and flag sustained elevations. The AI suggests relaxation routines and clinician reviews when patterns persist." },
+      { keys: ["salt intake", "sodium", "diet hypertension"], reply: "Dietary sodium tracking through our nutrition module helps patients with hypertension identify and reduce hidden salt sources." },
+
+      // Respiratory conditions
+      { keys: ["asthma", "respiratory", "breathing", "lung"], reply: "MedNova’s respiratory analytics detect irregular breathing patterns, inhaler use frequency, and environmental triggers like humidity or pollution." },
+      { keys: ["copd", "emphysema", "bronchitis"], reply: "For COPD, our sensors monitor oxygen saturation, movement, and coughing frequency to spot exacerbations early and recommend interventions." },
+      { keys: ["sleep apnea", "snoring", "oxygen desaturation"], reply: "The platform integrates sleep sensors that detect apneic episodes, helping clinicians adjust therapy or CPAP usage." },
+
+      // Musculoskeletal and pain conditions
+      { keys: ["arthritis", "joint pain", "mobility", "osteoarthritis"], reply: "Our motion tracking quantifies joint stiffness and pain-related movement changes, giving patients feedback on activity tolerance and progress." },
+      { keys: ["back", "posture", "ergonomics"], reply: "Posture sensors alert users when prolonged sitting or poor ergonomics may worsen back discomfort, recommending corrective stretches." },
+      { keys: ["fibromyalgia", "chronic pain"], reply: "MedNova collects multi-sensor data to understand flare-up triggers such as stress, temperature, or sleep deprivation, supporting individualized pain management." },
+
+      // Obesity and metabolic syndrome
+      { keys: ["obesity", "weight", "bmi", "metabolic syndrome"], reply: "Weight-tracking and calorie-expenditure models forecast metabolic changes and suggest incremental lifestyle goals for sustainable results." },
+      { keys: ["nutrition", "diet plan", "calories"], reply: "The nutrition assistant interprets meal logs to show how diet choices influence glucose, weight, and cardiovascular indicators." },
+      { keys: ["hydration", "water intake"], reply: "Hydration reminders and trends appear in the app, helping maintain kidney and metabolic function, especially for diabetes and hypertension patients." },
+
+      // Mental health and stress
+      { keys: ["stress", "anxiety", "mental health", "mood"], reply: "Heart-rate variability and activity data feed our stress-index model. The assistant suggests mindfulness exercises and alerts when chronic stress patterns emerge." },
+      { keys: ["depression", "low mood", "motivation"], reply: "Mood logging correlates with activity and sleep data to help identify early depressive trends, supporting clinician follow-up." },
+      { keys: ["burnout", "work stress"], reply: "The AI recommends recovery intervals and sleep optimization strategies to reduce burnout risk based on continuous fatigue monitoring." },
+
+      // Autoimmune and inflammatory
+      { keys: ["autoimmune", "inflammation", "lupus", "crohn", "colitis"], reply: "Inflammation insights combine wearable temperature and fatigue signals with lab trends to detect flares and support treatment planning." },
+      { keys: ["psoriasis", "eczema", "skin inflammation"], reply: "Environmental humidity and stress data help track dermatologic flare triggers and treatment response." },
+      { keys: ["thyroid", "hashimoto", "endocrine"], reply: "Endocrine dashboards show how thyroid hormone shifts correlate with metabolic and cardiovascular metrics." },
+
+      // Sleep and recovery
+      { keys: ["sleep", "insomnia", "restless"], reply: "Sleep analytics track REM cycles, interruptions, and recovery scores, helping patients adjust routines for better rest and disease control." },
+      { keys: ["circadian", "night shift", "jet lag"], reply: "Circadian rhythm tracking advises light exposure timing and meal scheduling to maintain hormonal balance." },
+      { keys: ["fatigue", "energy", "recovery"], reply: "Daily recovery scores integrate sleep quality, activity strain, and stress load for holistic well-being." },
+
+      // Kidney and liver health
+      { keys: ["kidney", "renal", "creatinine", "hydration"], reply: "Hydration and blood-pressure data feed into renal-function risk models that prompt timely lab checks." },
+      { keys: ["liver", "fatty liver", "hepatic"], reply: "Our nutrition module assists liver health by monitoring saturated fat intake and correlating it with biometric data." },
+
+      // Oncology and immune monitoring
+      { keys: ["cancer", "oncology", "tumor", "chemo", "therapy"], reply: "MedNova supports oncology follow-ups by monitoring fatigue, vitals, and recovery, without replacing clinical oversight." },
+      { keys: ["immune", "infection", "fever", "temperature"], reply: "Temperature and heart-rate signals can highlight early infection risk; alerts are sent to clinicians when thresholds are exceeded." },
+
+      // Women’s health
+      { keys: ["menstrual", "cycle", "fertility", "pms"], reply: "Cycle tracking overlays hormonal phases with glucose and mood data, offering insights for women managing chronic conditions." },
+      { keys: ["menopause", "hormone therapy", "hot flashes"], reply: "Wearables detect thermoregulation changes, helping personalize hormone-related therapy adjustments." },
+
+      // Aging and geriatrics
+      { keys: ["elderly", "aging", "falls", "mobility"], reply: "Fall detection sensors and gait analysis protect older adults, alerting caregivers instantly if instability or a fall is detected." },
+      { keys: ["memory", "cognitive", "dementia"], reply: "Cognitive health monitoring tracks activity and routine consistency as indicators of mental function and independence." },
+
+      // Preventive and lifestyle
+      { keys: ["prevention", "screening", "checkup"], reply: "MedNova’s preventive care reminders keep patients aligned with screenings, vaccinations, and periodic assessments." },
+      { keys: ["wellness", "self care", "habit"], reply: "The AI coach suggests daily achievable goals to build lasting habits that improve chronic disease outcomes." },
+      { keys: ["aging well", "longevity", "vitality"], reply: "Longevity analytics synthesize cardiovascular, metabolic, and mental health data to forecast biological age trends." }
+    ];
+
+
+    const intents = [...existingIntents, ...healthIntents];
+
+    function findReply(text) {
+      const t = text.toLowerCase();
+      for (const intent of intents) {
+        if (intent.keys.some(k => t.includes(k))) return intent.reply;
+      }
+      return "Here’s what I can help with: Vision, Ethical Guardrails, Equity Moves, Stakeholders, and the Rollout Roadmap. Try asking a different question like 'Help my back hurts' or 'HEART SORE'";
+    }
+
+    function addMessage(role, html) {
+      const wrap = document.createElement('div');
+      wrap.className = 'msg ' + role;
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = html;
+      wrap.appendChild(bubble);
+      chat.appendChild(wrap);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function addTyping() {
+      const wrap = document.createElement('div');
+      wrap.className = 'msg bot typing';
+      wrap.innerHTML = '<div class="bubble"><span class="dots"><i></i><i></i><i></i></span></div>';
+      chat.appendChild(wrap);
+      chat.scrollTop = chat.scrollHeight;
+      return wrap;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage('user', text);
+      input.value = '';
+
+      const t = addTyping();
+      setTimeout(() => {
+        t.remove();
+        const reply = findReply(text);
+        addMessage('bot', reply);
+      }, 450); // tiny delay for realism
+    });
+  </script>
+</body>
+
+</html>
