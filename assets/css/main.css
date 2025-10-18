@@ -420,6 +420,136 @@ input, select, textarea {
   letter-spacing: 2px;
 }
 
+/* Roadmap Timeline — Centered, Light Theme */
+.roadmap {
+  margin: 60px auto;
+  max-width: 1000px;
+  padding: 0 20px;
+  background: #ffffff;
+  color: #222;
+}
+
+.timeline {
+  position: relative;
+  list-style: none;
+  padding-left: 0;
+  margin: 40px auto;
+}
+
+/* Central vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #e0e0e0;
+  transform: translateX(-50%);
+}
+
+/* Timeline item layout */
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+/* Alternate sides */
+.timeline-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+.timeline-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
+}
+
+/* Dot markers */
+.timeline-item .dot {
+  position: absolute;
+  top: 32px;
+  left: calc(50% - 10px);
+  width: 20px;
+  height: 20px;
+  background: #0078d7; /* light blue accent */
+  border: 3px solid #fff;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 0 0 3px rgba(0, 120, 215, 0.15);
+}
+
+/* Card styling */
+.timeline-item .card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 18px 22px;
+  color: #222;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.timeline-item .phase-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.timeline-item .phase {
+  font-weight: 700;
+  color: #0078d7;
+}
+
+.timeline-item .title {
+  font-size: 22px;
+  margin: 8px 0;
+  color: #111;
+}
+
+.timeline-item .desc {
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.timeline-item .bullets {
+  margin: 0;
+  padding-left: 18px;
+  color: #333;
+}
+
+.timeline-item .bullets li {
+  margin-bottom: 6px;
+}
+
+/* Center alignment on large screens */
+.timeline,
+.timeline-item {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive (mobile single column) */
+@media (max-width: 900px) {
+  .timeline::before {
+    left: 20px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 60px;
+    text-align: left !important;
+  }
+
+  .timeline-item .dot {
+    left: 10px;
+  }
+}
+
+
 
 
 	.row {
